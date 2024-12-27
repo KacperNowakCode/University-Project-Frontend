@@ -1,0 +1,86 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url("/home/kacper/Desktop/University-Project-Frontend/aplikacja-pogodowa-frontend/WeatherApp/src/assets/picture1.jpeg");
+    background-size: cover;
+    font-family: 'Arial, sans-serif';
+    padding: 1px;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    background: linear-gradient(-45deg, #3d3d3d, #6f6f6f);
+    background-size: 400% 400%;
+    animation: gradient 30s ease infinite;
+    height: 30px;
+    border-top: 1px solid white;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.input {
+    flex: 1;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+    width: 100%;
+}
+
+.button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #0056b3;
+    font-size: 1.6rem;
+}
