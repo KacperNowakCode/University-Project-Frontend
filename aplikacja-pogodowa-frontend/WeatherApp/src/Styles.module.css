@@ -3,22 +3,53 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url("/home/kacper/Desktop/University-Project-Frontend/aplikacja-pogodowa-frontend/WeatherApp/src/assets/picture1.jpeg");
+    background-image: url("/home/kacper/Desktop/University-Project-Frontend/aplikacja-pogodowa-frontend/WeatherApp/src/assets/ed986079-dcec-49bb-b0f8-9c33c4128248.jpg");
     background-size: cover;
-    font-family: 'Arial, sans-serif';
-    padding: 1px;
+    font-family: Verdana, Tahoma, sans-serif;
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
+    
 }
 
 .title {
-    font-size: 3rem;
+    border-right: 3px solid black; /* Cursor effect */
+    white-space: nowrap;
+    overflow: hidden;
+    animation: typing 3s steps(30) forwards, blink 0.75s step-end infinite;
+    font-size: 8rem;
     font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-    text-align: center;
+    color: hsl(0, 0%, 20%);
+    margin-top: 2px;
+    margin-bottom: 5px;
+    text-align: left;
+    padding-left: 100px;
+    position: absolute;
+    z-index: 1;
+    top: 0px;
+    width: 94%;
+    background-color: transparent;
+    letter-spacing: 13px;
 }
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 92%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+.title:hover {
+    color: hsl(0, 0%, 30%);
+    font-size: 8.05rem;
+}
+
 
 .inputGroup {
     display: flex;
@@ -26,12 +57,14 @@
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 2px;
+    gap: 10px;
     width: 100%;
     max-width: 400px;
 }
 
 .footer {
+    display: flex;
+    justify-content: center;
     position: fixed;
     bottom: 0;
     left: 0;
@@ -39,11 +72,15 @@
     padding: 10px;
     color: #fff;
     text-align: center;
-    background: linear-gradient(-45deg, #3d3d3d, #6f6f6f);
-    background-size: 400% 400%;
-    animation: gradient 30s ease infinite;
     height: 30px;
-    border-top: 1px solid white;
+    background-color:hsl(207, 71%, 73%);
+    color: #333;
+    border-left: 8px solid white;
+    
+}
+
+.footer span {
+    margin: 0 5px;
 }
 
 @keyframes gradient {
