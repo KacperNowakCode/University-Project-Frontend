@@ -15,6 +15,8 @@ const HomePage = () => {
 
     return (
         <div className={styles.container}>
+            
+            
             <h1 className={styles.title}>
                 OOP Weather
             </h1>
