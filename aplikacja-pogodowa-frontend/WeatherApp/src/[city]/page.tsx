@@ -1,5 +1,12 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import SunIcon from './icons/SunIcon';
+import RainIcon from './icons/RainIcon';
+import CloudIcon from './icons/CloudIcon';
+import FogIcon from './icons/FogIcon';
+import SnowIcon from './icons/SnowIcon';
+import ThunderIcon from './icons/ThunderIcon';
+import styles from "./Styles2.module.css";
 
 interface CityData {
   weatherCode_hourly: number[];
@@ -10,6 +17,37 @@ interface CityData {
   weekly_max_temperature: number;
   weekly_min_temperature: number;
 }
+
+const weatherIcons: Record<number, React.FC> = {
+  0: SunIcon, 
+  1: SunIcon, 
+  2: CloudIcon,
+  3: CloudIcon,
+  45: FogIcon,
+  48: FogIcon,
+  51: RainIcon,
+  53: RainIcon,
+  55: RainIcon,
+  56: RainIcon,
+  57: RainIcon,
+  61: RainIcon,
+  63: RainIcon,
+  65: RainIcon,
+  66: RainIcon,
+  67: RainIcon,
+  71: SnowIcon,
+  73: SnowIcon,
+  75: SnowIcon,
+  77: SnowIcon,
+  80: RainIcon,
+  81: RainIcon,
+  82: RainIcon,
+  85: SnowIcon,
+  86: SnowIcon,
+  95: ThunderIcon,
+  97: ThunderIcon,
+  99: ThunderIcon,
+};
 
 export default function SlugPage() {
   const [weatherData, setWeatherData] = React.useState<CityData>();
@@ -25,7 +63,6 @@ export default function SlugPage() {
       if (data) {
         setWeatherData(data);
 
-        
         if (data.daily_min_temperature < 2) {
           alert('Uwaga na zimną pogodę! Minimalna temperatura dzisiaj wynosi ' + data.daily_min_temperature + '°C.');
         }
@@ -49,21 +86,18 @@ export default function SlugPage() {
       console.error('Error fetching data', error);
     }
   };
+  const currentHour = new Date().getHours();
 
   return (
     <div>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div>
-          <h1>Weather Data for {slug}</h1>
+        <div className={styles.container}>
+          <h1>Weather Data for {slug?.toUpperCase()}</h1>
           {weatherData && (
             <table style={{ borderCollapse: 'collapse', width: '100%', textAlign: 'left', marginBottom: '20px' }}>
               <thead>
-                <tr style={{ backgroundColor: '#f4f4f4' }}>
-                  <th style={{ border: '1px solid #ddd', padding: '8px' }}>Category</th>
-                  <th style={{ border: '1px solid #ddd', padding: '8px' }}>Value</th>
-                </tr>
               </thead>
               <tbody>
                 <tr>
@@ -84,13 +118,14 @@ export default function SlugPage() {
                 </tr>
                 <tr>
                   <td style={{ border: '1px solid #ddd', padding: '8px' }}>Most Common Weather Code</td>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{weatherData.most_common_weather_code}</td>
+                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>
+                    {weatherIcons[weatherData.most_common_weather_code] ? React.createElement(weatherIcons[weatherData.most_common_weather_code]) : weatherData.most_common_weather_code}
+                  </td>
                 </tr>
               </tbody>
             </table>
           )}
 
-          
           {weatherData && (
             <div>
               <h2>Hourly Data</h2>
@@ -103,26 +138,27 @@ export default function SlugPage() {
                 }}
               >
                 <thead>
-                  <tr style={{ backgroundColor: '#f4f4f4' }}>
-                    {weatherData.weatherCode_hourly.map((_, index) => (
-                      <th key={index} style={{ border: '1px solid #ddd', padding: '8px' }}>
-                        Hour {index + 1}
-                      </th>
-                    ))}
-                  </tr>
                 </thead>
                 <tbody>
+                  <tr>
+                    {weatherData.weatherCode_hourly.map((code, index) => {
+                      const Icon = weatherIcons[code];
+                      if ((index + currentHour) % 24 <= 6 || (index + currentHour) % 24 > 20) {
+                        return <td key={index} style={{ border: '1px solid #ddd', padding: '8px', backgroundColor: '#092163' }}>
+                        {Icon ? <Icon /> : code}
+                                            </td>;
+                      }
+                      else{
+                        return <td key={index} style={{ border: '1px solid #ddd', padding: '8px', backgroundColor: '#f9f9f9' }}>
+                        {Icon ? <Icon /> : code}
+                      </td>
+                      }
+                    })}
+                  </tr>
                   <tr>
                     {weatherData.temperature_hourly.map((temp, index) => (
                       <td key={index} style={{ border: '1px solid #ddd', padding: '8px' }}>
                         {temp}°C
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    {weatherData.weatherCode_hourly.map((code, index) => (
-                      <td key={index} style={{ border: '1px solid #ddd', padding: '8px' }}>
-                        {code}
                       </td>
                     ))}
                   </tr>
@@ -131,7 +167,7 @@ export default function SlugPage() {
                   <tr>
                     {weatherData.temperature_hourly.map((_, index) => (
                       <td key={index} style={{ border: '1px solid #ddd', padding: '8px', backgroundColor: '#f9f9f9' }}>
-                        {index}:00
+                        {(index + currentHour) % 24}:00
                       </td>
                     ))}
                   </tr>
