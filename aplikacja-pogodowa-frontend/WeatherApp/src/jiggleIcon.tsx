@@ -41,3 +41,4 @@ const JiggleIcon = () => {
 };
 
 export default JiggleIcon;
+
