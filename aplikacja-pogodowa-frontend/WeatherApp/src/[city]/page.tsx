@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import styles from './Pagestyle.module.css';
 
 interface CityData {
   weatherCode_hourly: number[];
@@ -25,7 +26,6 @@ export default function SlugPage() {
       if (data) {
         setWeatherData(data);
 
-        
         if (data.daily_min_temperature < 2) {
           alert('Uwaga na zimną pogodę! Minimalna temperatura dzisiaj wynosi ' + data.daily_min_temperature + '°C.');
         }
@@ -50,96 +50,34 @@ export default function SlugPage() {
     }
   };
 
+  const averageTemperature = weatherData
+    ? (weatherData.temperature_hourly.reduce((a, b) => a + b, 0) / weatherData.temperature_hourly.length).toFixed(1)
+    : null;
+
   return (
-    <div>
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1>Weather for {slug}</h1>
+      </header>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div>
-          <h1>Weather Data for {slug}</h1>
-          {weatherData && (
-            <table style={{ borderCollapse: 'collapse', width: '100%', textAlign: 'left', marginBottom: '20px' }}>
-              <thead>
-                <tr style={{ backgroundColor: '#f4f4f4' }}>
-                  <th style={{ border: '1px solid #ddd', padding: '8px' }}>Category</th>
-                  <th style={{ border: '1px solid #ddd', padding: '8px' }}>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>Daily Max Temperature</td>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{weatherData.daily_max_temperature}°C</td>
-                </tr>
-                <tr>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>Daily Min Temperature</td>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{weatherData.daily_min_temperature}°C</td>
-                </tr>
-                <tr>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>Weekly Max Temperature</td>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{weatherData.weekly_max_temperature}°C</td>
-                </tr>
-                <tr>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>Weekly Min Temperature</td>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{weatherData.weekly_min_temperature}°C</td>
-                </tr>
-                <tr>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>Most Common Weather Code</td>
-                  <td style={{ border: '1px solid #ddd', padding: '8px' }}>{weatherData.most_common_weather_code}</td>
-                </tr>
-              </tbody>
-            </table>
-          )}
-
-          
-          {weatherData && (
-            <div>
-              <h2>Hourly Data</h2>
-              <table
-                style={{
-                  borderCollapse: 'collapse',
-                  width: '100%',
-                  textAlign: 'center',
-                  marginBottom: '20px',
-                }}
-              >
-                <thead>
-                  <tr style={{ backgroundColor: '#f4f4f4' }}>
-                    {weatherData.weatherCode_hourly.map((_, index) => (
-                      <th key={index} style={{ border: '1px solid #ddd', padding: '8px' }}>
-                        Hour {index + 1}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    {weatherData.temperature_hourly.map((temp, index) => (
-                      <td key={index} style={{ border: '1px solid #ddd', padding: '8px' }}>
-                        {temp}°C
-                      </td>
-                    ))}
-                  </tr>
-                  <tr>
-                    {weatherData.weatherCode_hourly.map((code, index) => (
-                      <td key={index} style={{ border: '1px solid #ddd', padding: '8px' }}>
-                        {code}
-                      </td>
-                    ))}
-                  </tr>
-                </tbody>
-                <tfoot>
-                  <tr>
-                    {weatherData.temperature_hourly.map((_, index) => (
-                      <td key={index} style={{ border: '1px solid #ddd', padding: '8px', backgroundColor: '#f9f9f9' }}>
-                        {index}:00
-                      </td>
-                    ))}
-                  </tr>
-                </tfoot>
-              </table>
+        weatherData && (
+          <div className={styles.weatherInfo}>
+            <h2>Average Temperature: {averageTemperature}°C</h2>
+            <p>L: {weatherData.weekly_min_temperature}°C</p>
+            <p>H: {weatherData.weekly_max_temperature}°C</p>
+            <div className={styles.weatherDetails}>
+              {weatherData.temperature_hourly.map((temp, index) => (
+                <div key={index} className={styles.hourlyWeather}>
+                  <p className={styles.category}>{`${index}:00`}</p>
+                  <p className={styles.value}>{temp}°C</p>
+                  <p className={styles.value}>Code: {weatherData.weatherCode_hourly[index]}</p>
+                </div>
+              ))}
             </div>
-          )}
-        </div>
+          </div>
+        )
       )}
     </div>
   );

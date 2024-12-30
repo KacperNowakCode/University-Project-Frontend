@@ -1,0 +1,90 @@
+.container {
+    font-family: 'Poppins', sans-serif;
+    padding: 35px;
+    max-width: 100%; /* Kontener zajmuje pełną szerokość */
+    height: 90vh; /* Kontener zajmuje pełną wysokość strony */
+    background: linear-gradient(145deg, #3d79f0, #7ca5f7);
+    border-radius: 16px;
+    box-shadow: none
+  }
+  
+  .header {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(145deg, #046ffc, #0011ff);
+    color: #fff;
+    border-radius: 12px;
+    box-shadow: none;
+    width: 300px;
+  }
+  
+  .header h1 {
+    font-size: 28px;
+    margin: 0;
+    letter-spacing: 1px;
+  }
+  
+  .weatherInfo {
+    text-align: left;
+    margin-top: 30px;
+    color: #000000;
+  }
+  
+  .weatherInfo h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #ffffff;
+    font-weight: 600;
+  }
+  
+  .weatherInfo p {
+    margin: 5px 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: #353434;
+  }
+  
+  .weatherDetails {
+    display: flex;
+    justify-content: space-between; /* Rozkłada kafelki równomiernie */
+    flex-wrap: wrap; /* Wszystkie kafelki w jednym rzędzie */
+    gap: 10px; /* Odstępy między kafelkami */
+    overflow: visible; /* Brak przewijania */
+  }
+  
+  .hourlyWeather {
+    margin-top: 30px;
+    flex: 1; /* Każdy kafelek zajmuje równą część dostępnej przestrzeni */
+    max-width: 120px; /* Maksymalna szerokość kafelka */
+    min-width: 25px; /* Minimalna szerokość kafelka */
+    background: linear-gradient(145deg, #ffffff, #ffffff);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: none;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .hourlyWeather:hover {
+    transform: translateY(-5px);
+    box-shadow: none;
+  }
+  
+  .category {
+    font-weight: 600;
+    color: #0077cc;
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+  
+  .value {
+    font-size: 16px;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  .value:last-child {
+    font-size: 14px;
+    color: #888;
+    margin-top: 5px;
+  }
