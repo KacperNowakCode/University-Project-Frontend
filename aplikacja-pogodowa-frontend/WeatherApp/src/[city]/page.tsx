@@ -1,6 +1,12 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import styles from './Pagestyle.module.css';
+import SunIcon from './icons/SunIcon';
+import RainIcon from './icons/RainIcon';
+import CloudIcon from './icons/CloudIcon';
+import FogIcon from './icons/FogIcon';
+import SnowIcon from './icons/SnowIcon';
+import ThunderIcon from './icons/ThunderIcon';
+import styles from "./Pagestyle.module.css";
 
 interface CityData {
   weatherCode_hourly: number[];
@@ -11,6 +17,37 @@ interface CityData {
   weekly_max_temperature: number;
   weekly_min_temperature: number;
 }
+
+const weatherIcons: Record<number, React.FC> = {
+  0: SunIcon, 
+  1: SunIcon, 
+  2: CloudIcon,
+  3: CloudIcon,
+  45: FogIcon,
+  48: FogIcon,
+  51: RainIcon,
+  53: RainIcon,
+  55: RainIcon,
+  56: RainIcon,
+  57: RainIcon,
+  61: RainIcon,
+  63: RainIcon,
+  65: RainIcon,
+  66: RainIcon,
+  67: RainIcon,
+  71: SnowIcon,
+  73: SnowIcon,
+  75: SnowIcon,
+  77: SnowIcon,
+  80: RainIcon,
+  81: RainIcon,
+  82: RainIcon,
+  85: SnowIcon,
+  86: SnowIcon,
+  95: ThunderIcon,
+  97: ThunderIcon,
+  99: ThunderIcon,
+};
 
 export default function SlugPage() {
   const [weatherData, setWeatherData] = React.useState<CityData>();
@@ -49,35 +86,96 @@ export default function SlugPage() {
       console.error('Error fetching data', error);
     }
   };
-
-  const averageTemperature = weatherData
-    ? (weatherData.temperature_hourly.reduce((a, b) => a + b, 0) / weatherData.temperature_hourly.length).toFixed(1)
-    : null;
+  const currentHour = new Date().getHours();
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>
-        <h1>Weather for {slug}</h1>
-      </header>
+    <div>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        weatherData && (
-          <div className={styles.weatherInfo}>
-            <h2>Average Temperature: {averageTemperature}°C</h2>
-            <p>L: {weatherData.weekly_min_temperature}°C</p>
-            <p>H: {weatherData.weekly_max_temperature}°C</p>
-            <div className={styles.weatherDetails}>
-              {weatherData.temperature_hourly.map((temp, index) => (
-                <div key={index} className={styles.hourlyWeather}>
-                  <p className={styles.category}>{`${index}:00`}</p>
-                  <p className={styles.value}>{temp}°C</p>
-                  <p className={styles.value}>Code: {weatherData.weatherCode_hourly[index]}</p>
-                </div>
-              ))}
+        <div className={styles.container}>
+          <h1>
+            {slug?.toUpperCase()}{' '}
+            {weatherData && weatherIcons[weatherData.most_common_weather_code] ? (
+              React.createElement(weatherIcons[weatherData.most_common_weather_code])
+            ) : null}
+          </h1>
+          {weatherData && (
+            <div className={styles.temperatureContainer}>
+              <div className={styles.temperatureItem}>
+                <div className={styles.temperatureLabel}>Daily Max Temperature</div>
+                <div className={styles.temperatureValue}>{weatherData.daily_max_temperature}°C</div>
+              </div>
+              <div className={styles.temperatureItem}>
+                <div className={styles.temperatureLabel}>Daily Min Temperature</div>
+                <div className={styles.temperatureValue}>{weatherData.daily_min_temperature}°C</div>
+              </div>
+              <div className={styles.temperatureItem}>
+                <div className={styles.temperatureLabel}>Weekly Max Temperature</div>
+                <div className={styles.temperatureValue}>{weatherData.weekly_max_temperature}°C</div>
+              </div>
+              <div className={styles.temperatureItem}>
+                <div className={styles.temperatureLabel}>Weekly Min Temperature</div>
+                <div className={styles.temperatureValue}>{weatherData.weekly_min_temperature}°C</div>
+              </div>
             </div>
-          </div>
-        )
+          )}
+
+          {weatherData && (
+            <div>
+              <h2>Weather</h2>
+              <table
+                style={{
+                  borderCollapse: 'collapse',
+                  width: '100%',
+                  textAlign: 'center',
+                  marginBottom: '20px',
+                }}
+              >
+                <thead>
+                </thead>
+                <tbody>
+                <tr>
+                  {weatherData.weatherCode_hourly.map((code, index) => {
+                    const Icon = weatherIcons[code];
+                    const isNight = (index + currentHour) % 24 <= 6 || (index + currentHour) % 24 > 20;
+                    return (
+                      <td
+                        key={index}
+                        style={{
+                          border: '1px solid #ddd',
+                          padding: '8px',
+                          backgroundColor: isNight ? '#11113B' : '#f9f9f9', // Night and day backgrounds
+                        }}
+                      >
+                        <div className={isNight ? styles.invertedIcon : ''}>
+                          {Icon ? <Icon /> : code}
+                        </div>
+                      </td>
+                    );
+                  })}
+                </tr>
+                  <tr>
+                    {weatherData.temperature_hourly.map((temp, index) => (
+                      <td key={index} style={{ border: '1px solid #ddd', padding: '8px' }}>
+                        {temp}°C
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    {weatherData.temperature_hourly.map((_, index) => (
+                      <td key={index} style={{ border: '1px solid #ddd', padding: '8px', backgroundColor: '#f9f9f9' }}>
+                        {(index + currentHour) % 24}:00
+                      </td>
+                    ))}
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
