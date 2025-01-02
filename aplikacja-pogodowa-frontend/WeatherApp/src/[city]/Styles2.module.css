@@ -1,5 +1,77 @@
 .container {
     background-image: url("/home/kacper/Desktop/University-Project-Frontend/aplikacja-pogodowa-frontend/WeatherApp/src/assets/ed986079-dcec-49bb-b0f8-9c33c4128248.jpg");
-    height: 100vh;
+    height: 93vh;
     margin-top: 0px;
+    background-color: rgb(255, 255, 255);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.tablerow{
+    padding: 6px;
+    text-align: center;
+}
+.night{
+    padding: 6px;
+    background-color: #092163;
+}
+.footer {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 97.9%;
+    padding: 10px;
+    color: hsl(0, 0%, 30%);
+    text-align: center;
+    margin-left: 7px;
+    height: 30px;
+    background-color:hsl(207, 71%, 73%);
+    color: #333;
+    
+    
+}
+.title {
+    width: 99%;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    animation: fall 0.7s steps(100) forwards;
+    font-size: 7rem;
+    color: hsl(0, 0%, 30%);
+    margin-top: 2px;
+    margin-bottom: 5px;
+    text-align: center;
+    position: absolute;
+    top: 0px;
+    letter-spacing: 13px;
+    text-shadow: 4px 4px 4px rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    
+}
+@keyframes fall {
+    0% {
+        transform: translateY(-100%);
+    }
+    30% {
+        transform: translateY(0);
+    }
+    45% {
+        transform: translateY(-40%);
+    }
+    60% {
+        transform: translateY(-50%);
+    }
+    85% {
+        transform: translateY(0);
+    }
+    95% {
+        transform: translateY(-10%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+.title:hover {
+    color: hsl(0, 0%, 33%);
+    font-size: 7.05rem;
 }
