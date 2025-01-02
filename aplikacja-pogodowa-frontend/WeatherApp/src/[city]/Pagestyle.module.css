@@ -22,7 +22,6 @@
   font-size: 60px;
   margin: 10;
   letter-spacing: 1px;
-  hover: 0.5s;
 }
 
 .weatherInfo {
@@ -191,4 +190,9 @@ tfoot td {
 .tablerow{
   padding: 6px;
   text-align: center;
+}
+
+.temperatureItem:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }

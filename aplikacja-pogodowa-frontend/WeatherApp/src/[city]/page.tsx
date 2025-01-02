@@ -48,8 +48,6 @@ const weatherIcons: Record<number, React.FC> = {
   95: ThunderIcon,
   97: ThunderIcon,
   99: ThunderIcon,
-  100: MoonIcon,
-
 };
 
 export default function SlugPage() {
@@ -65,7 +63,6 @@ export default function SlugPage() {
       const data = await getData(slug);
       if (data) {
         setWeatherData(data);
-
 
         if (data.daily_min_temperature < 2) {
           alert('Uwaga na zimną pogodę! Minimalna temperatura dzisiaj wynosi ' + data.daily_min_temperature + '°C.');
@@ -93,7 +90,7 @@ export default function SlugPage() {
   const currentHour = new Date().getHours();
 
   return (
-    <div className={styles.container}>
+    <div>
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -131,10 +128,9 @@ export default function SlugPage() {
               <table
                 style={{
                   borderCollapse: 'collapse',
-                  width: '90%',
+                  width: '100%',
                   textAlign: 'center',
                   marginBottom: '20px',
-                  marginLeft: '5%',
                 }}
               >
                 <thead></thead>
@@ -210,26 +206,7 @@ export default function SlugPage() {
                   </tr>
                 </tfoot>
               </table>
-              <footer className={styles.footer}>
-                <a 
-                    href="https://github.com/KacperNowakCode" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: 'none', color: 'inherit', paddingRight: '5px' }}
-                >
-                    Kacper Nowak
-                </a> & 
-                <a 
-                    href="https://github.com/w0dur" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    style={{ textDecoration: 'none', color: 'inherit', paddingLeft: '5px' }}
-                >
-                    Mateusz Wątor
-                </a>
-            </footer>
             </div>
-            
           )}
         </div>
       )}
