@@ -19,4 +19,3 @@ const ThunderIcon = () => {
 };
 
 export default ThunderIcon;
-

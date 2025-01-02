@@ -41,4 +41,3 @@ const SunIcon = () => {
 };
 
 export default SunIcon;
-

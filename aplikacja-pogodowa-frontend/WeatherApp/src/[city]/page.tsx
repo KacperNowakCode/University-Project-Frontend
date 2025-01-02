@@ -6,7 +6,7 @@ import CloudIcon from './icons/CloudIcon';
 import FogIcon from './icons/FogIcon';
 import SnowIcon from './icons/SnowIcon';
 import ThunderIcon from './icons/ThunderIcon';
-import styles from "./Styles2.module.css";
+import styles from "./Pagestyle.module.css";
 import MoonIcon from './icons/MoonIcon';
 
 interface CityData {
@@ -49,6 +49,7 @@ const weatherIcons: Record<number, React.FC> = {
   97: ThunderIcon,
   99: ThunderIcon,
   100: MoonIcon,
+
 };
 
 export default function SlugPage() {
@@ -65,9 +66,10 @@ export default function SlugPage() {
       if (data) {
         setWeatherData(data);
 
-        //if (data.daily_min_temperature < 2) {
-          //alert('Uwaga na zimną pogodę! Minimalna temperatura dzisiaj wynosi ' + data.daily_min_temperature + '°C.');
-        //}
+
+        if (data.daily_min_temperature < 2) {
+          alert('Uwaga na zimną pogodę! Minimalna temperatura dzisiaj wynosi ' + data.daily_min_temperature + '°C.');
+        }
       } else {
         console.error('Error fetching data');
       }
@@ -95,43 +97,37 @@ export default function SlugPage() {
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div>
-          <h1 className={styles.title}>Weather Data for {slug?.toUpperCase()}</h1>
-          <h2 style={{paddingTop: '200px', textAlign: 'center'}}>Weekly Data</h2>
+        <div className={styles.container}>
+          <h1 className={styles.h1}>
+            {slug?.toUpperCase()}{' '}
+            {weatherData && weatherIcons[weatherData.most_common_weather_code] ? (
+              React.createElement(weatherIcons[weatherData.most_common_weather_code])
+            ) : null}
+          </h1>
           {weatherData && (
-            <table style={{ borderCollapse: 'collapse', width: '40%', textAlign: 'left', marginBottom: '20px', marginTop: '20px', marginLeft: '30%' }}>
-              <thead>
-              </thead>
-              <tbody>
-                <tr>
-                  <td className={styles.tablerow}>Daily Max Temperature</td>
-                  <td className={styles.tablerow}>{weatherData.daily_max_temperature}°C</td>
-                </tr>
-                <tr>
-                  <td className={styles.tablerow}>Daily Min Temperature</td>
-                  <td className={styles.tablerow}>{weatherData.daily_min_temperature}°C</td>
-                </tr>
-                <tr>
-                  <td className={styles.tablerow}>Weekly Max Temperature</td>
-                  <td className={styles.tablerow}>{weatherData.weekly_max_temperature}°C</td>
-                </tr>
-                <tr>
-                  <td className={styles.tablerow}>Weekly Min Temperature</td>
-                  <td className={styles.tablerow}>{weatherData.weekly_min_temperature}°C</td>
-                </tr>
-                <tr>
-                  <td className={styles.tablerow}>Most Common Weather Code</td>
-                  <td className={styles.tablerow}>
-                    {weatherIcons[weatherData.most_common_weather_code] ? React.createElement(weatherIcons[weatherData.most_common_weather_code]) : weatherData.most_common_weather_code}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <div className={styles.temperatureContainer}>
+              <div className={styles.temperatureItem}>
+                <div className={styles.temperatureLabel}>Daily Max Temperature</div>
+                <div className={styles.temperatureValue}>{weatherData.daily_max_temperature}°C</div>
+              </div>
+              <div className={styles.temperatureItem}>
+                <div className={styles.temperatureLabel}>Daily Min Temperature</div>
+                <div className={styles.temperatureValue}>{weatherData.daily_min_temperature}°C</div>
+              </div>
+              <div className={styles.temperatureItem}>
+                <div className={styles.temperatureLabel}>Weekly Max Temperature</div>
+                <div className={styles.temperatureValue}>{weatherData.weekly_max_temperature}°C</div>
+              </div>
+              <div className={styles.temperatureItem}>
+                <div className={styles.temperatureLabel}>Weekly Min Temperature</div>
+                <div className={styles.temperatureValue}>{weatherData.weekly_min_temperature}°C</div>
+              </div>
+            </div>
           )}
 
           {weatherData && (
             <div>
-              <h2>Hourly Data</h2>
+              <h2>Weather</h2>
               <table
                 style={{
                   borderCollapse: 'collapse',
@@ -141,26 +137,58 @@ export default function SlugPage() {
                   marginLeft: '5%',
                 }}
               >
-                <thead>
-                </thead>
+                <thead></thead>
                 <tbody>
                   <tr>
                     {weatherData.weatherCode_hourly.map((code, index) => {
                       const Icon = weatherIcons[code];
-                      if(((index + currentHour) % 24 <= 6 || (index + currentHour) % 24 >= 20) && (code == 0 || code == 1)){
-                        return <td key={index} className={styles.night}>
-                        <MoonIcon></MoonIcon>
-                                            </td>;
-                      }
-                      else if ((index + currentHour) % 24 <= 6 || (index + currentHour) % 24 >= 20) {
-                        return <td key={index} className={styles.night}>
-                        {Icon ? <Icon /> : code}
-                                            </td>;
-                      }
-                      else{
-                        return <td key={index} className={styles.tablerow}>
-                        {Icon ? <Icon /> : code}
-                      </td>
+                      const isNight = (index + currentHour) % 24 <= 6 || (index + currentHour) % 24 > 20;
+
+                      // Nighttime specific rendering logic
+                      if (isNight && (code === 0 || code === 1)) {
+                        return (
+                          <td
+                            key={index}
+                            style={{
+                              border: '1px solid #ddd',
+                              padding: '8px',
+                              backgroundColor: '#11113B', // Night background
+                            }}
+                          >
+                            <div className={styles.invertedIcon}>
+                              <MoonIcon />
+                            </div>
+                          </td>
+                        );
+                      } else if (isNight) {
+                        return (
+                          <td
+                            key={index}
+                            style={{
+                              border: '1px solid #ddd',
+                              padding: '8px',
+                              backgroundColor: '#11113B', // Night background
+                            }}
+                          >
+                            <div className={styles.invertedIcon}>
+                              {Icon ? <Icon /> : code}
+                            </div>
+                          </td>
+                        );
+                      } else {
+                        // Daytime rendering logic
+                        return (
+                          <td
+                            key={index}
+                            style={{
+                              border: '1px solid #ddd',
+                              padding: '8px',
+                              backgroundColor: '#f9f9f9', // Day background
+                            }}
+                          >
+                            {Icon ? <Icon /> : code}
+                          </td>
+                        );
                       }
                     })}
                   </tr>
@@ -175,7 +203,7 @@ export default function SlugPage() {
                 <tfoot>
                   <tr>
                     {weatherData.temperature_hourly.map((_, index) => (
-                      <td key={index} className={styles.tablerow}>
+                      <td key={index} style={{ border: '1px solid #ddd', padding: '8px', backgroundColor: '#f9f9f9' }}>
                         {(index + currentHour) % 24}:00
                       </td>
                     ))}
