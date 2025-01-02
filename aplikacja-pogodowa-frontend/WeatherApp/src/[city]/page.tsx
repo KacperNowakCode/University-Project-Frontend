@@ -7,6 +7,7 @@ import FogIcon from './icons/FogIcon';
 import SnowIcon from './icons/SnowIcon';
 import ThunderIcon from './icons/ThunderIcon';
 import styles from "./Pagestyle.module.css";
+import MoonIcon from './icons/MoonIcon';
 
 interface CityData {
   weatherCode_hourly: number[];
@@ -94,7 +95,7 @@ export default function SlugPage() {
         <p>Loading...</p>
       ) : (
         <div className={styles.container}>
-          <h1>
+          <h1 className={styles.h1}>
             {slug?.toUpperCase()}{' '}
             {weatherData && weatherIcons[weatherData.most_common_weather_code] ? (
               React.createElement(weatherIcons[weatherData.most_common_weather_code])
@@ -132,32 +133,64 @@ export default function SlugPage() {
                   marginBottom: '20px',
                 }}
               >
-                <thead>
-                </thead>
+                <thead></thead>
                 <tbody>
-                <tr>
-                  {weatherData.weatherCode_hourly.map((code, index) => {
-                    const Icon = weatherIcons[code];
-                    const isNight = (index + currentHour) % 24 <= 6 || (index + currentHour) % 24 > 20;
-                    return (
-                      <td
-                        key={index}
-                        style={{
-                          border: '1px solid #ddd',
-                          padding: '8px',
-                          backgroundColor: isNight ? '#11113B' : '#f9f9f9', // Night and day backgrounds
-                        }}
-                      >
-                        <div className={isNight ? styles.invertedIcon : ''}>
-                          {Icon ? <Icon /> : code}
-                        </div>
-                      </td>
-                    );
-                  })}
-                </tr>
+                  <tr>
+                    {weatherData.weatherCode_hourly.map((code, index) => {
+                      const Icon = weatherIcons[code];
+                      const isNight = (index + currentHour) % 24 <= 6 || (index + currentHour) % 24 > 20;
+
+                      // Nighttime specific rendering logic
+                      if (isNight && (code === 0 || code === 1)) {
+                        return (
+                          <td
+                            key={index}
+                            style={{
+                              border: '1px solid #ddd',
+                              padding: '8px',
+                              backgroundColor: '#11113B', // Night background
+                            }}
+                          >
+                            <div className={styles.invertedIcon}>
+                              <MoonIcon />
+                            </div>
+                          </td>
+                        );
+                      } else if (isNight) {
+                        return (
+                          <td
+                            key={index}
+                            style={{
+                              border: '1px solid #ddd',
+                              padding: '8px',
+                              backgroundColor: '#11113B', // Night background
+                            }}
+                          >
+                            <div className={styles.invertedIcon}>
+                              {Icon ? <Icon /> : code}
+                            </div>
+                          </td>
+                        );
+                      } else {
+                        // Daytime rendering logic
+                        return (
+                          <td
+                            key={index}
+                            style={{
+                              border: '1px solid #ddd',
+                              padding: '8px',
+                              backgroundColor: '#f9f9f9', // Day background
+                            }}
+                          >
+                            {Icon ? <Icon /> : code}
+                          </td>
+                        );
+                      }
+                    })}
+                  </tr>
                   <tr>
                     {weatherData.temperature_hourly.map((temp, index) => (
-                      <td key={index} style={{ border: '1px solid #ddd', padding: '8px' }}>
+                      <td key={index} className={styles.tablerow}>
                         {temp}°C
                       </td>
                     ))}
