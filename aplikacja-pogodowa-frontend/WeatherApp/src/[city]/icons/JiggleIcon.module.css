@@ -1,0 +1,22 @@
+@keyframes jiggle {
+    0% { transform: rotate(0); }
+    25% { transform: rotate(10deg); }
+    50% { transform: rotate(-10deg); }
+    75% { transform: rotate(10deg); }
+    100% { transform: rotate(0); }
+}
+
+.sun {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    height: 50px;
+    width: 50px;
+}
+
+.sun:hover {
+    transform: scale(1.1);
+}
+
+.jiggle {
+    animation: jiggle 0.5s ease-in-out;
+}
