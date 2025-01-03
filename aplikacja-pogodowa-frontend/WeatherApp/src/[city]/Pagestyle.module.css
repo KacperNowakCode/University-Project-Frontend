@@ -22,7 +22,34 @@
   font-size: 60px;
   margin: 10;
   letter-spacing: 1px;
+  display: inline-block;
+  animation: fall 0.7s steps(100) forwards;
 }
+
+@keyframes fall {
+  0% {
+      transform: translateY(-100%);
+  }
+  30% {
+      transform: translateY(0);
+  }
+  45% {
+      transform: translateY(-40%);
+  }
+  60% {
+      transform: translateY(-50%);
+  }
+  85% {
+      transform: translateY(0);
+  }
+  95% {
+      transform: translateY(-10%);
+  }
+  100% {
+      transform: translateY(0);
+  }
+}
+
 
 .weatherInfo {
   text-align: left;
@@ -249,10 +276,56 @@ tfoot td {
   margin-bottom: 10px;
   font-weight: bold;
   font-size: 1em;
-  width: 850px;
+  width: 70vh;
 }
 
 .alert:hover {
   transform: translateY(-5px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
+  
+}
+
+.input {
+  flex: 1;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+  border: 0;
+  border-bottom: 2px solid hsl(0, 0%, 30%);
+  outline: 0;
+  font-size: 1.3rem;
+  color: hsl(0, 0%, 10%);
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+  font-size: 1.01rem;
 }

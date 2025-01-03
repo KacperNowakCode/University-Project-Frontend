@@ -8,6 +8,8 @@ import SnowIcon from './icons/SnowIcon';
 import ThunderIcon from './icons/ThunderIcon';
 import MoonIcon from './icons/MoonIcon';
 import styles from "./Pagestyle.module.css";
+import { useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface CityData {
   weatherCode_hourly: number[];
@@ -86,6 +88,15 @@ export default function SlugPage() {
 
   const currentHour = new Date().getHours();
 
+  const [location, setLocation] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = () => {
+        if (location.trim()) {
+            navigate(`/${location}`);
+        }
+    };
+
   return (
     <div>
       {loading ? (
@@ -94,11 +105,28 @@ export default function SlugPage() {
         <div className={styles.container}>
           <h1 className={styles.h1}>
             {slug?.toUpperCase()}{' '}
-            {weatherData && weatherIcons[weatherData.most_common_weather_code] ? (
-              React.createElement(weatherIcons[weatherData.most_common_weather_code])
-            ) : null}
-          </h1>
-
+            <div className={styles.inputGroup}>
+            
+            <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Enter location"
+                className={styles.input}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                        handleSearch();
+                    }
+                }}
+            />
+            <button
+                onClick={handleSearch}
+                className={styles.button}
+            >
+                Search
+            </button>
+        </div>  
+          </h1>        
           {weatherData && (
             <div>
               <div className={styles.temperatureContainer}>
@@ -152,12 +180,17 @@ export default function SlugPage() {
                   );
                 })}
               </div>
-
-              {/* Alerts below hourly weather */}
               <div className={styles.alertContainer}>
                 {weatherData.daily_min_temperature < 2 && (
                   <div className={styles.alert}>
                     Warning: Cold weather! Minimum temperature today is {weatherData.daily_min_temperature}°C.
+                  </div>
+                )}
+              </div>
+              <div className={styles.alertContainer}>
+                {weatherData.weekly_max_temperature > 25 && (
+                  <div className={styles.alert}>
+                    Warning: High temperatures this week!
                   </div>
                 )}
               </div>
