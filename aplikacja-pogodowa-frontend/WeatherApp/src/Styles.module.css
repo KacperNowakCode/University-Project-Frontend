@@ -5,7 +5,7 @@
     justify-content: center;
     background: linear-gradient(45deg, #f7f9ff, #bbccee);;
     background-size: cover;
-    font-family: Verdana, Tahoma, sans-serif;
+    font-family: 'Poppins', sans-serif;
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
@@ -88,6 +88,8 @@
 }
 
 .footer {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
     display: flex;
     justify-content: center;
     position: fixed;
@@ -101,8 +103,6 @@
     height: 30px;
     background-color:hsl(207, 71%, 73%);
     color: #333;
-    border-top: 2px solid rgb(163, 159, 159);
-    
 }
 
 
