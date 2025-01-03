@@ -22,7 +22,6 @@
   font-size: 60px;
   margin: 10;
   letter-spacing: 1px;
-  hover: 0.5s;
 }
 
 .weatherInfo {
@@ -61,6 +60,8 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
   min-width: 180px; /* Consistent width for items */
   text-align: left; /* Align text to the left */
+  border: 1px solid #000000; /* Light border */
+  margin-bottom: 30px;
 }
 
 .temperatureLabel {
@@ -191,4 +192,67 @@ tfoot td {
 .tablerow{
   padding: 6px;
   text-align: center;
+}
+
+.hourlyWeatherContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.hourlyWeatherItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  width: 60px;
+  height: 110px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.hourlyWeatherItem.night {
+  background-color: #092163;
+  color: white;
+}
+
+.hourlyWeatherItem.day {
+  background-color: #f9f9f9;
+  color: black;
+}
+
+.hourlyWeatherItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.temperatureItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.alertContainer {
+  margin-top: 50px;
+  padding: 5px;
+}
+
+.alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1em;
+  width: 850px;
+}
+
+.alert:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
