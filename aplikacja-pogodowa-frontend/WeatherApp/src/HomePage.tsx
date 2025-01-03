@@ -20,7 +20,7 @@ const HomePage = () => {
             <h1 className={styles.title}>
                 OOP Weather
             </h1>
-            <JiggleIcon />
+            <JiggleIcon/>
             <div className={styles.inputGroup}>
             
                 <input
