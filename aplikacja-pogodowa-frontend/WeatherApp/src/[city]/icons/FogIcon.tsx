@@ -17,5 +17,5 @@ const FogIcon = () => {
     );
 };
 
-export default FogIcon;
 
+export default FogIcon;

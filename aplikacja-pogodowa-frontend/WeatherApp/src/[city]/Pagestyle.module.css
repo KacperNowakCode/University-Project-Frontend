@@ -1,0 +1,350 @@
+.container {
+  font-family: 'Poppins', sans-serif;
+  padding: 35px;
+  max-width: 100%;
+  height: 90vh;
+  background: linear-gradient(45deg, #f7f9ff, #bbccee);
+  border-radius: 15x;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  text-align: left;
+  padding: 20px;
+  background: linear-gradient(145deg, #046ffc, #0011ff);
+  color: #fff;
+  border-radius: 12px;
+  width: 200px;
+}
+
+.h1 {
+  padding-bottom: 10px;
+  font-size: 60px;
+  margin: 10;
+  letter-spacing: 1px;
+  display: inline-block;
+  animation: fall 0.7s steps(100) forwards;
+}
+
+@keyframes fall {
+  0% {
+      transform: translateY(-100%);
+  }
+  30% {
+      transform: translateY(0);
+  }
+  45% {
+      transform: translateY(-40%);
+  }
+  60% {
+      transform: translateY(-50%);
+  }
+  85% {
+      transform: translateY(0);
+  }
+  95% {
+      transform: translateY(-10%);
+  }
+  100% {
+      transform: translateY(0);
+  }
+}
+
+
+.weatherInfo {
+  text-align: left;
+  margin-top: 30px;
+  color: #000000;
+}
+
+.weatherInfo h2 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #ffffff;
+  font-weight: 600;
+  text-align: left;
+}
+
+.weatherInfo p {
+  margin: 5px 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #494949;
+}
+
+.temperatureContainer {
+  display: flex; /* Arrange items in a row */
+  flex-wrap: wrap; /* Wrap to the next line if needed */
+  justify-content: flex-start; /* Align to the left */
+  gap: 16px; /* Space between items */
+  margin-bottom: 20px;
+}
+
+.temperatureItem {
+  background: linear-gradient(145deg, #ffffff, #eaeaea); /* Subtle gradient */
+  border-radius: 8px;
+  padding: 10px 15px; /* Inner spacing */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow */
+  min-width: 180px; /* Consistent width for items */
+  text-align: left; /* Align text to the left */
+  border: 1px solid #000000; /* Light border */
+  margin-bottom: 30px;
+}
+
+.temperatureLabel {
+  font-weight: bold;
+  font-size: 14px;
+  color: #555; /* Subtle dark gray */
+  margin-bottom: 5px;
+}
+
+.temperatureValue {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333; /* Slightly darker gray for emphasis */
+}
+
+/* Compact daily/weekly temperature details */
+.temperatureTable {
+  width: auto;
+  margin: 20px 0;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px; /* Make the text smaller */
+  color: #333;
+}
+
+.temperatureTable td {
+  padding: 6px 12px; /* Reduce padding for a compact layout */
+  border: none;
+  font-weight: 500;
+}
+
+.temperatureTable tr td:first-child {
+  font-weight: 600; /* Highlight the category name */
+  color: #555;
+}
+
+.temperatureTable tr td:last-child {
+  text-align: right; /* Align values to the right for better readability */
+}
+
+.weatherDetails {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  overflow: visible;
+}
+
+.hourlyWeather {
+  margin-top: 30px;
+  flex: 1; /* Each box takes an equal portion of space */
+  max-width: 120px; /* Maximum box width */
+  min-width: 60px; /* Minimum box width */
+  background: linear-gradient(145deg, #ffffff, #eaeaea);
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s; /* Smooth hover effect */
+}
+
+.hourlyWeather:hover {
+  transform: translateY(-5px); /* Slight upward movement on hover */
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+
+.category {
+  font-weight: 600;
+  color: #0077cc;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.value {
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+}
+
+.value:last-child {
+  font-size: 12px;
+  color: #888;
+  margin-top: 5px;
+}
+
+.tableContainer {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table td, table th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+table td {
+  text-align: center;
+  background-color: #f9f9f9;
+}
+
+table td.night {
+  background-color: #092163;
+  color: white;
+}
+
+tfoot td {
+  background-color: #eaeaea;
+  font-weight: bold;
+  color: #333;
+}
+
+.invertedIcon {
+  filter: invert(90%) hue-rotate(180deg) brightness(400%);
+  transition: filter 0.3s ease;
+}
+
+.night{
+  padding: 6px;
+  background-color: #072d96;
+}
+
+.tablerow{
+  padding: 6px;
+  text-align: center;
+}
+
+.hourlyWeatherContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 20px;
+}
+
+.hourlyWeatherItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px;
+  border: 1px solid #000000;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  width: 60px;
+  height: 110px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.hourlyWeatherItem.night {
+  background-color: #092163;
+  color: white;
+}
+
+.hourlyWeatherItem.day {
+  background-color: #f9f9f9;
+  color: black;
+}
+
+.hourlyWeatherItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.temperatureItem:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.alertContainer {
+  margin-top: 50px;
+  padding: 5px;
+}
+
+.alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1em;
+  width: 70vh;
+}
+
+.alert:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 20px;
+  
+}
+
+.input {
+  flex: 1;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+  border: 0;
+  border-bottom: 2px solid hsl(0, 0%, 30%);
+  outline: 0;
+  font-size: 1.3rem;
+  color: hsl(0, 0%, 10%);
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+
+.button {
+  padding: 12px 20px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+  font-size: 1.01rem;
+}
+
+.suggestions {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+}
+
+.suggestionItem {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.suggestionItem:hover {
+  background-color: #f0f0f0;
+}

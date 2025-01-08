@@ -19,4 +19,3 @@ const CloudIcon = () => {
 };
 
 export default CloudIcon;
-

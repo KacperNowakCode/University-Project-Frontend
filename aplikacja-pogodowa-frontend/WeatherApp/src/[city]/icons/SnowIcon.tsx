@@ -19,4 +19,3 @@ const SnowIcon = () => {
 };
 
 export default SnowIcon;
-

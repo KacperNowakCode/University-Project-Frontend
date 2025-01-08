@@ -18,5 +18,5 @@ const RainIcon = () => {
     );
 };
 
-export default RainIcon;
 
+export default RainIcon;

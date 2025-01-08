@@ -3,13 +3,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url("C:\Users\PC\Desktop\University-Project-Frontend\aplikacja-pogodowa-frontend\WeatherApp\src\assets\cartoon-flat-style-white-clouds-on-blue.png");
+    background: linear-gradient(45deg, #f7f9ff, #bbccee);
     background-size: cover;
     font-family: Verdana, Tahoma, sans-serif;
     height: 100vh;
     background-position: center;
     background-repeat: no-repeat;
-    text-align: center;
     
 }
 
@@ -73,6 +72,24 @@
     color: hsl(0, 0%, 33%);
     font-size: 7.05rem;
 }
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 92%;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+.title:hover {
+    color: hsl(0, 0%, 30%);
+    font-size: 8.05rem;
+}
 
 
 .inputGroup {
@@ -84,7 +101,6 @@
     gap: 10px;
     width: 100%;
     max-width: 400px;
-    
 }
 
 .footer {
@@ -93,18 +109,20 @@
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 97.9%;
+    width: 100%;
     padding: 10px;
     color: #fff;
     text-align: center;
-    margin-left: 7px;
     height: 30px;
     background-color:hsl(207, 71%, 73%);
     color: #333;
-    border-top: 2px solid rgb(163, 159, 159);
+    border-left: 8px solid white;
     
 }
 
+.footer span {
+    margin: 0 5px;
+}
 
 @keyframes gradient {
     0% {
@@ -126,10 +144,10 @@
     width: 100%;
     font-family: inherit;
     border: 0;
-    border-bottom: 2px solid hsl(0, 0%, 30%);
+    border-bottom: 2px solid gray;
     outline: 0;
     font-size: 1.3rem;
-    color: hsl(0, 0%, 10%);
+    color: hsl(0, 0%, 20%);
     padding: 7px 0;
     background: transparent;
     transition: border-color 0.2s;
