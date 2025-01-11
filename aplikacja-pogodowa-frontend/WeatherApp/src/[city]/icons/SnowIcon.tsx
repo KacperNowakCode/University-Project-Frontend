@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import styles from "./JiggleIcon.module.css";
 
@@ -19,3 +20,4 @@ const SnowIcon = () => {
 };
 
 export default SnowIcon;
+

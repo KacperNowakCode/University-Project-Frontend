@@ -9,6 +9,7 @@ import ThunderIcon from './icons/ThunderIcon';
 import MoonIcon from './icons/MoonIcon';
 import styles from "./Pagestyle.module.css";
 
+
 interface CityData {
   weatherCode_hourly: number[];
   temperature_hourly: number[];
@@ -133,6 +134,15 @@ export default function SlugPage() {
 
   const currentHour = new Date().getHours();
 
+  const [location, setLocation] = useState('');
+    const navigate = useNavigate();
+
+    const handleSearch = () => {
+        if (location.trim()) {
+            navigate(`/${location}`);
+        }
+    };
+
   return (
     <div>
       {loading ? (
@@ -140,6 +150,7 @@ export default function SlugPage() {
       ) : (
         <div className={styles.container}>
           <h1 className={styles.h1}>
+
             {slug?.toUpperCase()}
             <div className={styles.inputGroup}>
               <input
@@ -174,6 +185,7 @@ export default function SlugPage() {
               </ul>
             </div>
           </h1>
+
           {weatherData && (
             <div>
               <div className={styles.temperatureContainer}>
@@ -194,6 +206,7 @@ export default function SlugPage() {
                   <div className={styles.temperatureValue}>{weatherData.weekly_min_temperature}°C</div>
                 </div>
               </div>
+
               <h2>Weather</h2>
               <div className={styles.hourlyWeatherContainer}>
                 {weatherData.weatherCode_hourly.map((code, index) => {
@@ -202,10 +215,12 @@ export default function SlugPage() {
                   const hour = (index + currentHour) % 24;
 
                   return (
+
                     <div
                       key={index}
                       className={`${styles.hourlyWeatherItem} ${isNight ? styles.night : styles.day}`}
                     >
+
                       <div style={{ marginBottom: 'auto', fontSize: '1.2em', fontWeight: 'bold' }}>{hour}:00</div>
                       <div style={{ margin: 'auto' }}>
                         {isNight && (code === 0 || code === 1) ? (
@@ -224,11 +239,13 @@ export default function SlugPage() {
                           code
                         )}
                       </div>
+
                       <div
                         style={{ marginTop: 'auto', fontSize: '1.2em', fontWeight: 'bold' }}
                       >
                         {weatherData.temperature_hourly[index]}°C
                       </div>
+
                     </div>
                   );
                 })}
@@ -242,7 +259,9 @@ export default function SlugPage() {
               </div>
               <div className={styles.alertContainer}>
                 {weatherData.weekly_max_temperature > 25 && (
+
                   <div className={styles.alert}>Warning: High temperatures this week!</div>
+
                 )}
               </div>
             </div>
