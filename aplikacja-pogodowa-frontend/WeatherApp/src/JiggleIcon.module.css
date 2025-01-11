@@ -11,6 +11,7 @@
     transition: transform 0.2s ease; /* Smooth scaling on hover */
     height: 200px;
     width: 200px;
+    margin-top: 300px;
 }
 
 .sun:hover {

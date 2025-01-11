@@ -32,10 +32,11 @@ const HomePage = () => {
 
     return (
         <div className={styles.container}>
+            <JiggleIcon/>
             <h1 className={styles.title}>
                 OOP Weather
             </h1>
-            <JiggleIcon/>
+            
             
             <div className={styles.inputGroup}>
                 <input
@@ -60,7 +61,7 @@ const HomePage = () => {
 
             
             {filteredCities.length > 0 && (
-                <ul className={styles.suggestions}>
+                <ul className={styles.ulist}>
                     {filteredCities.map((city, index) => (
                         <p
                             key={index}
