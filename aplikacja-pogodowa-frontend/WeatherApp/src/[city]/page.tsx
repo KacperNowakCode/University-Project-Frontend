@@ -106,36 +106,21 @@ export default function SlugPage() {
     }
   }, []);
 
-  const sortAndFilterCities = (filter: string) => {
-    if (!filter.trim()) {
-      setSuggestions([]);
-      return;
-    }
 
-    const filteredCities = cities.filter(city =>
-      city.toLowerCase().startsWith(filter.toLowerCase())
-    ).sort((a, b) => a.localeCompare(b));
 
-    setSuggestions(filteredCities.slice(0, 10));
-  };
+    
 
   const handleInputChange = (value: string) => {
     setLocation(value);
-    sortAndFilterCities(value);
+    
   };
 
-  const handleSearch = () => {
-    if (location.trim()) {
-      navigate(`/${location}`);
-      setLocation('');
-      setSuggestions([]);
-    }
-  };
+ 
 
   const currentHour = new Date().getHours();
 
-  const [location, setLocation] = useState('');
-    const navigate = useNavigate();
+  
+    
 
     const handleSearch = () => {
         if (location.trim()) {
@@ -168,21 +153,6 @@ export default function SlugPage() {
               <button onClick={handleSearch} className={styles.button}>
                 Search
               </button>
-              <ul className={styles.suggestions}>
-                {suggestions.map((suggestion, index) => (
-                  <li
-                    key={index}
-                    onClick={() => {
-                      setLocation(suggestion);
-                      setSuggestions([]);
-                      handleSearch();
-                    }}
-                    className={styles.suggestionItem}
-                  >
-                    {suggestion}
-                  </li>
-                ))}
-              </ul>
             </div>
           </h1>
 
