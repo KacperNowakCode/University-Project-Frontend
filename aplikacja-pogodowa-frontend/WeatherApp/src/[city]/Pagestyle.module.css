@@ -74,6 +74,7 @@
 }
 
 .temperatureContainer {
+  margin-top: 75px;
   display: flex; /* Arrange items in a row */
   flex-wrap: wrap; /* Wrap to the next line if needed */
   justify-content: flex-start; /* Align to the left */
@@ -295,7 +296,8 @@ tfoot td {
   gap: 10px;
   width: 100%;
   max-width: 400px;
-  margin-top: 20px;
+  margin-top: 0px;
+  margin-bottom: 10px;
   
 }
 
@@ -330,4 +332,20 @@ tfoot td {
 .button:hover {
   background-color: #0056b3;
   font-size: 1.01rem;
+}
+.ulist{
+  margin-left: -40px;
+}
+
+.suggestion {
+  position: absolute;
+  border: 1px solid #000000; /* Light border */ 
+  width: 280px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: center;
+  padding: 10px;
+  margin-top: 0px;
+  margin-bottom: 1px;
+  border-radius: 5px;
+  background-color: white;
 }

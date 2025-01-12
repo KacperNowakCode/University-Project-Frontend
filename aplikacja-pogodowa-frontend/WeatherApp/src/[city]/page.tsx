@@ -8,7 +8,7 @@ import SnowIcon from './icons/SnowIcon';
 import ThunderIcon from './icons/ThunderIcon';
 import MoonIcon from './icons/MoonIcon';
 import styles from "./Pagestyle.module.css";
-
+import citiesData from './cities5000.json';
 
 interface CityData {
   weatherCode_hourly: number[];
@@ -54,13 +54,11 @@ const weatherIcons: Record<number, React.FC> = {
 export default function SlugPage() {
   const [weatherData, setWeatherData] = useState<CityData>();
   const [loading, setLoading] = useState<boolean>(true);
-  const { slug } = useParams<{ slug?: string }>();
   const [location, setLocation] = useState('');
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [cities, setCities] = useState<string[]>([]);
+  const [filteredCities, setFilteredCities] = useState<string[]>([]);
+  const { slug } = useParams<{ slug?: string }>();
   const navigate = useNavigate();
 
-  // Fetch weather data
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -87,46 +85,31 @@ export default function SlugPage() {
       return response.json() as Promise<CityData>;
     } catch (error) {
       console.error('Error fetching data', error);
-      return null; // Return null on error
+      return null;
     }
   };
 
-  // Define citiesData
-  const citiesData: string[] = []; // Replace with actual data or fetch it from a source
-
-  // Fetch cities data
-  useEffect(() => {
-    if (Array.isArray(citiesData)) {
-      fetch('/c:/Users/ja/IdeaProjects/University-Project-Frontend/aplikacja-pogodowa-frontend/WeatherApp/src/[city]/cities5000.json')
-        .then(response => response.json())
-        .then(data => setCities(data))
-        .catch(error => console.error('Error fetching cities data:', error));
-    } else {
-      console.error("Invalid data format in cities5000.json:", citiesData);
-    }
-  }, []);
-
-
-
-    
-
-  const handleInputChange = (value: string) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
     setLocation(value);
-    
+
+    if (value.trim()) {
+      const filtered = citiesData
+        .filter(city => city.toLowerCase().startsWith(value.toLowerCase()))
+        .slice(0, 5);
+      setFilteredCities(filtered);
+    } else {
+      setFilteredCities([]);
+    }
   };
 
- 
+  const handleSearch = () => {
+    if (location.trim()) {
+      navigate(`/${location}`);
+    }
+  };
 
   const currentHour = new Date().getHours();
-
-  
-    
-
-    const handleSearch = () => {
-        if (location.trim()) {
-            navigate(`/${location}`);
-        }
-    };
 
   return (
     <div>
@@ -135,26 +118,43 @@ export default function SlugPage() {
       ) : (
         <div className={styles.container}>
           <h1 className={styles.h1}>
-
             {slug?.toUpperCase()}
-            <div className={styles.inputGroup}>
-              <input
-                type="text"
-                value={location}
-                onChange={(e) => handleInputChange(e.target.value)}
-                placeholder="Enter location"
-                className={styles.input}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleSearch();
-                  }
-                }}
-              />
-              <button onClick={handleSearch} className={styles.button}>
-                Search
-              </button>
-            </div>
           </h1>
+          <div className={styles.inputGroup}>
+            <input
+              type="text"
+              value={location}
+              onChange={handleInputChange}
+              placeholder="Enter location"
+              className={styles.input}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSearch();
+                }
+              }}
+            />
+            <button onClick={handleSearch} className={styles.button}>
+              Search
+            </button>
+          </div>
+          {filteredCities.length > 0 && (
+                <ul className={styles.ulist}>
+                    {filteredCities.map((city, index) => (
+                        <p
+                            key={index}
+                            onClick={() => {
+                                setLocation(city);
+                                setFilteredCities([]);
+                                navigate(`/${city}`);
+                                setLocation('');
+                            }}
+                            className={styles.suggestion}
+                        >
+                            <em>{city}</em>
+                        </p>
+                    ))}
+                </ul>
+            )}
 
           {weatherData && (
             <div>
