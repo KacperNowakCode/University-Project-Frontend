@@ -1,5 +1,5 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import SunIcon from './icons/SunIcon';
 import RainIcon from './icons/RainIcon';
 import CloudIcon from './icons/CloudIcon';
@@ -20,8 +20,8 @@ interface CityData {
 }
 
 const weatherIcons: Record<number, React.FC> = {
-  0: SunIcon, 
-  1: SunIcon, 
+  0: SunIcon,
+  1: SunIcon,
   2: CloudIcon,
   3: CloudIcon,
   45: FogIcon,
@@ -51,11 +51,16 @@ const weatherIcons: Record<number, React.FC> = {
 };
 
 export default function SlugPage() {
-  const [weatherData, setWeatherData] = React.useState<CityData>();
-  const [loading, setLoading] = React.useState<boolean>(true);
-  const { slug } = useParams();
+  const [weatherData, setWeatherData] = useState<CityData>();
+  const [loading, setLoading] = useState<boolean>(true);
+  const { slug } = useParams<{ slug?: string }>();
+  const [location, setLocation] = useState('');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [cities, setCities] = useState<string[]>([]);
+  const navigate = useNavigate();
 
-  React.useEffect(() => {
+  // Fetch weather data
+  useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       if (!slug) return;
@@ -76,11 +81,53 @@ export default function SlugPage() {
     try {
       const response = await fetch(`http://localhost:8080/api/weather/${city}`);
       if (!response.ok) {
-        throw new Error('Failed to fetch data');
+        throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
       }
       return response.json() as Promise<CityData>;
     } catch (error) {
       console.error('Error fetching data', error);
+      return null; // Return null on error
+    }
+  };
+
+  // Define citiesData
+  const citiesData: string[] = []; // Replace with actual data or fetch it from a source
+
+  // Fetch cities data
+  useEffect(() => {
+    if (Array.isArray(citiesData)) {
+      fetch('/c:/Users/ja/IdeaProjects/University-Project-Frontend/aplikacja-pogodowa-frontend/WeatherApp/src/[city]/cities5000.json')
+        .then(response => response.json())
+        .then(data => setCities(data))
+        .catch(error => console.error('Error fetching cities data:', error));
+    } else {
+      console.error("Invalid data format in cities5000.json:", citiesData);
+    }
+  }, []);
+
+  const sortAndFilterCities = (filter: string) => {
+    if (!filter.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    const filteredCities = cities.filter(city =>
+      city.toLowerCase().startsWith(filter.toLowerCase())
+    ).sort((a, b) => a.localeCompare(b));
+
+    setSuggestions(filteredCities.slice(0, 10));
+  };
+
+  const handleInputChange = (value: string) => {
+    setLocation(value);
+    sortAndFilterCities(value);
+  };
+
+  const handleSearch = () => {
+    if (location.trim()) {
+      navigate(`/${location}`);
+      setLocation('');
+      setSuggestions([]);
     }
   };
 
@@ -93,12 +140,40 @@ export default function SlugPage() {
       ) : (
         <div className={styles.container}>
           <h1 className={styles.h1}>
-            {slug?.toUpperCase()}{' '}
-            {weatherData && weatherIcons[weatherData.most_common_weather_code] ? (
-              React.createElement(weatherIcons[weatherData.most_common_weather_code])
-            ) : null}
+            {slug?.toUpperCase()}
+            <div className={styles.inputGroup}>
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => handleInputChange(e.target.value)}
+                placeholder="Enter location"
+                className={styles.input}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleSearch();
+                  }
+                }}
+              />
+              <button onClick={handleSearch} className={styles.button}>
+                Search
+              </button>
+              <ul className={styles.suggestions}>
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    onClick={() => {
+                      setLocation(suggestion);
+                      setSuggestions([]);
+                      handleSearch();
+                    }}
+                    className={styles.suggestionItem}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </h1>
-
           {weatherData && (
             <div>
               <div className={styles.temperatureContainer}>
@@ -119,7 +194,6 @@ export default function SlugPage() {
                   <div className={styles.temperatureValue}>{weatherData.weekly_min_temperature}°C</div>
                 </div>
               </div>
-
               <h2>Weather</h2>
               <div className={styles.hourlyWeatherContainer}>
                 {weatherData.weatherCode_hourly.map((code, index) => {
@@ -128,7 +202,10 @@ export default function SlugPage() {
                   const hour = (index + currentHour) % 24;
 
                   return (
-                    <div key={index} className={`${styles.hourlyWeatherItem} ${isNight ? styles.night : styles.day}`}>
+                    <div
+                      key={index}
+                      className={`${styles.hourlyWeatherItem} ${isNight ? styles.night : styles.day}`}
+                    >
                       <div style={{ marginBottom: 'auto', fontSize: '1.2em', fontWeight: 'bold' }}>{hour}:00</div>
                       <div style={{ margin: 'auto' }}>
                         {isNight && (code === 0 || code === 1) ? (
@@ -147,18 +224,25 @@ export default function SlugPage() {
                           code
                         )}
                       </div>
-                      <div style={{ marginTop: 'auto', fontSize: '1.2em', fontWeight: 'bold' }}>{weatherData.temperature_hourly[index]}°C</div>
+                      <div
+                        style={{ marginTop: 'auto', fontSize: '1.2em', fontWeight: 'bold' }}
+                      >
+                        {weatherData.temperature_hourly[index]}°C
+                      </div>
                     </div>
                   );
                 })}
               </div>
-
-              {/* Alerts below hourly weather */}
               <div className={styles.alertContainer}>
                 {weatherData.daily_min_temperature < 2 && (
                   <div className={styles.alert}>
                     Warning: Cold weather! Minimum temperature today is {weatherData.daily_min_temperature}°C.
                   </div>
+                )}
+              </div>
+              <div className={styles.alertContainer}>
+                {weatherData.weekly_max_temperature > 25 && (
+                  <div className={styles.alert}>Warning: High temperatures this week!</div>
                 )}
               </div>
             </div>

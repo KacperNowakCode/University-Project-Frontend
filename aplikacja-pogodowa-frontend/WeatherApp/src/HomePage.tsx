@@ -52,7 +52,7 @@ const HomePage = () => {
                     Kacper Nowak
                 </a> & 
                 <a 
-                    href="https://github.com/w0dur" 
+                    href="https://github.com/mateuszwator" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     style={{ textDecoration: 'none', color: 'inherit', paddingLeft: '5px' }}
